@@ -55,8 +55,6 @@ module sdl.init;
 import sdl.stdc;
 import sdl.events;
 
-extern (C) nothrow @nogc:
-
 /**
     Initialization flags for $(D SDL_Init) and/or $(D SDL_InitSubSystem)
 
@@ -162,7 +160,7 @@ enum SDL_AppResult {
         SDL_APP_FAILURE to terminate with an error, SDL_APP_SUCCESS to
         terminate with success, SDL_APP_CONTINUE to continue.
 */
-alias SDL_AppInit_func = SDL_AppResult function(void** appstate, int argc, char** argv);
+alias SDL_AppInit_func = extern (C) SDL_AppResult function(void** appstate, int argc, char** argv);
 
 /**
     Function pointer typedef for SDL_AppIterate.
@@ -179,7 +177,7 @@ alias SDL_AppInit_func = SDL_AppResult function(void** appstate, int argc, char*
         terminate with success, SDL_APP_CONTINUE to continue.
 
 */
-alias SDL_AppIterate_func = SDL_AppResult function(void* appstate);
+alias SDL_AppIterate_func = extern (C) SDL_AppResult function(void* appstate);
 
 /**
     Function pointer typedef for SDL_AppEvent.
@@ -197,7 +195,7 @@ alias SDL_AppIterate_func = SDL_AppResult function(void* appstate);
         terminate with success, SDL_APP_CONTINUE to continue.
 
 */
-alias SDL_AppEvent_func = SDL_AppResult function(void* appstate, SDL_Event* event);
+alias SDL_AppEvent_func = extern (C) SDL_AppResult function(void* appstate, SDL_Event* event);
 
 /**
     Function pointer typedef for SDL_AppQuit.
@@ -210,7 +208,9 @@ alias SDL_AppEvent_func = SDL_AppResult function(void* appstate, SDL_Event* even
     \param result the result code that terminated the app (success or failure).
 
 */
-alias SDL_AppQuit_func = void function(void* appstate, SDL_AppResult result);
+alias SDL_AppQuit_func = extern (C) void function(void* appstate, SDL_AppResult result);
+
+extern (C) nothrow @nogc:
 
 /**
     Initialize the SDL library.
