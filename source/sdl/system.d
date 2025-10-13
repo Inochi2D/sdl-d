@@ -52,6 +52,7 @@
         Luna Nielsen
 */
 module sdl.system;
+import sdl.stdc;
 import sdl.video;
 import sdl.d;
 
