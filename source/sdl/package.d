@@ -11,12 +11,14 @@
 */
 module sdl;
 
+public import sdl.version_;
 public import sdl.init;
 public import sdl.stdc;
 
 public import sdl.video;
 public import sdl.audio;
 public import sdl.camera;
+public import sdl.timer;
 
 public import sdl.events;
 public import sdl.keyboard;

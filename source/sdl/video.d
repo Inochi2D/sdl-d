@@ -445,6 +445,42 @@ enum SDL_FlashOperation {
 }
 
 /**
+    Progress-state for a window.
+*/
+enum SDL_ProgressState {
+    
+    /**
+        An invalid progress state indicating an error; check SDL_GetError()
+    */
+    SDL_PROGRESS_STATE_INVALID = -1,
+    
+    /**
+        No progress bar is shown
+    */
+    SDL_PROGRESS_STATE_NONE,
+    
+    /**
+        The progress bar is shown in a indeterminate state
+    */
+    SDL_PROGRESS_STATE_INDETERMINATE,
+    
+    /**
+        The progress bar is shown in a normal state
+    */
+    SDL_PROGRESS_STATE_NORMAL,
+    
+    /**
+        The progress bar is shown in a paused state
+    */
+    SDL_PROGRESS_STATE_PAUSED,
+    
+    /**
+        The progress bar is shown in a state indicating the application had an error
+    */
+    SDL_PROGRESS_STATE_ERROR
+}
+
+/**
     An opaque handle to an OpenGL context.
     See_Also:
         $(D SDL_GL_CreateContext)
@@ -3312,6 +3348,53 @@ extern bool SDL_SetWindowShape(SDL_Window* window, SDL_Surface* shape);
         This function should only be called on the main thread.
 */
 extern bool SDL_FlashWindow(SDL_Window* window, SDL_FlashOperation operation);
+
+
+/**
+    Sets the state of the progress bar for the given window's taskbar icon.
+
+    Params:
+        window =    The window to set the progress state of.
+        state =     The progress state to set. 
+
+    Returns:
+        $(D true) if the operation succeeded, $(D false) otherwise.
+*/
+extern bool SDL_SetWindowProgressState(SDL_Window *window, SDL_ProgressState state);
+
+/**
+    Get the state of the progress bar for the given window's taskbar icon.
+
+    Params:
+        window =    The window to get the progress state of.
+
+    Returns:
+        The progress state of the window.
+*/
+extern SDL_ProgressState SDL_GetWindowProgressState(SDL_Window *window);
+
+/**
+    Sets the value of the progress bar for the given window's taskbar icon.
+
+    Params:
+        window =    The window to set the progress value of.
+        value =     The progress value to set.
+    
+    Returns:
+        $(D true) if the operation succeeded, $(D false) otherwise.
+*/
+extern bool SDL_SetWindowProgressValue(SDL_Window *window, float value);
+
+/**
+    Get the value of the progress bar for the given window's taskbar icon.
+
+    Params:
+        window =    The window to get the progress value of.
+
+    Returns:
+        The progress value.
+*/
+extern float SDL_GetWindowProgressValue(SDL_Window *window);
 
 /**
     Destroy a window.

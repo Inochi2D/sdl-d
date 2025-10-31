@@ -199,6 +199,22 @@ enum SDL_MouseWheelDirection {
 }
 
 /**
+    Animated cursor frame info.
+*/
+struct SDL_CursorFrameInfo {
+    
+    /**
+        The surface data for this frame
+    */
+    SDL_Surface* surface;
+    
+    /**
+        The frame duration in milliseconds (a duration of 0 is infinite)
+    */
+    uint duration;
+}
+
+/**
     A bitmask of pressed mouse buttons, as reported by SDL_GetMouseState, etc.
 
     - Button 1: Left mouse button
@@ -652,6 +668,17 @@ extern SDL_Cursor* SDL_CreateCursor(const Uint8* data,
 extern SDL_Cursor* SDL_CreateColorCursor(SDL_Surface* surface,
     int hot_x,
     int hot_y);
+
+/**
+    Create an animated color cursor.
+
+    Params:
+        frames =        pointer to an array of frames for the cursor.
+        frame_count =   the amount of frames in the array.
+        hot_x =         the x position of the cursor hot spot.
+        hot_y =         the y position of the cursor hot spot.
+*/
+extern SDL_Cursor* SDL_CreateAnimatedCursor(SDL_CursorFrameInfo* frames, int frame_count, int hot_x, int hot_y);
 
 /**
     Create a system cursor.

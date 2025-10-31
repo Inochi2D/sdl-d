@@ -62,6 +62,7 @@ import sdl.properties;
 import sdl.rect;
 import sdl.surface;
 import sdl.video;
+import sdl.gpu;
 
 extern(C) nothrow @nogc:
 
@@ -270,7 +271,8 @@ extern bool SDL_CreateWindowAndRenderer(const(char)* title, int width, int heigh
         name = The name of the rendering driver to initialize, or `null` to let SDL choose one.
 
     Returns:
-        A valid rendering context or `null` if there was an error; call $(D SDL_GetError) for more information.
+        A valid rendering context or $(D null) if there was an error; 
+        call $(D SDL_GetError) for more information.
 
     Threadsafety:
         This function should only be called on the main thread.
@@ -284,6 +286,42 @@ extern bool SDL_CreateWindowAndRenderer(const(char)* title, int width, int heigh
         $(D SDL_GetRendererName)
 */
 extern SDL_Renderer* SDL_CreateRenderer(SDL_Window* window, const(char)* name);
+
+/**
+    Create a 2D GPU rendering context.
+
+    Params:
+        device =    the GPU device to use with the renderer, or $(D null) to create a
+                    device.
+        window =    the window where rendering is displayed, or $(D null) to create an
+                    offscreen renderer.
+
+    Threadsafety:
+        If this function is called with a valid GPU device, it should
+        be called on the thread that created the device. If this
+        function is called with a valid window, it should be called
+        on the thread that created the window.
+
+    Returns:
+        A valid rendering context or $(D null) if there was an error; 
+        call $(D SDL_GetError) for more information.
+*/
+extern SDL_Renderer* SDL_CreateGPURenderer(SDL_GPUDevice* device, SDL_Window *window);
+
+/**
+    Return the GPU device used by a renderer.
+
+    Params:
+        renderer =  renderer the rendering context.
+    
+    Threadsafety:
+        It is safe to call this function from any thread.
+    
+    Returns:
+        The GPU device used by the renderer, or $(D null) if the renderer is
+        not a GPU renderer; call $(D SDL_GetError) for more information.
+*/
+extern SDL_GPUDevice* SDL_GetGPURendererDevice(SDL_Renderer* renderer);
 
 /**
     Create a 2D rendering context for a window, with the specified properties.
