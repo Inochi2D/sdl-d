@@ -28,10 +28,55 @@ configuration "win32" {
 }
 
 configuration "apple" {
-    platforms "osx" "ios"
+    platforms "osx" "ios" "tvos"
+
+    // tvOS
     lflags \
-        "-F/Library/Frameworks" "-F/Library/Frameworks/SDL3.xcframework" "-Flibs/" \
-        "-framework" "SDL3"
+        "-F$HOME/Library/Frameworks/SDL3.xcframework/tvos-arm64" \
+        platform="tvos"
+    
+    preBuildCommands \
+        "cp -r $HOME/Library/Frameworks/SDL3.xcframework/tvos-arm64/SDL3.framework libs/." \
+        platform="tvos"
+    
+    // tvOS (Simulator)
+    lflags \
+        "-F$HOME/Library/Frameworks/SDL3.xcframework/tvos-arm64_x86_64-simulator" \
+        platform="tvos-simulator"
+    
+    preBuildCommands \
+        "cp -r $HOME/Library/Frameworks/SDL3.xcframework/tvos-arm64_x86_64-simulator/SDL3.framework libs/." \
+        platform="tvos-simulator"
+
+    // iOS
+    lflags \
+        "-F$HOME/Library/Frameworks/SDL3.xcframework/ios-arm64" \
+        platform="ios"
+    
+    preBuildCommands \
+        "cp -r $HOME/Library/Frameworks/SDL3.xcframework/ios-arm64/SDL3.framework libs/." \
+        platform="ios"
+
+    // iOS (Simulator)
+    lflags \
+        "-F$HOME/Library/Frameworks/SDL3.xcframework/ios-arm64_x86_64-simulator" \
+        platform="ios-simulator"
+    
+    preBuildCommands \
+        "cp -r $HOME/Library/Frameworks/SDL3.xcframework/ios-arm64_x86_64-simulator/SDL3.framework libs/." \
+        platform="ios-simulator"
+
+    // OSX
+    lflags \
+        "-F$HOME/Library/Frameworks/SDL3.xcframework/macos-arm64_x86_64" \
+        platform="osx"
+    
+    preBuildCommands \
+        "cp -r $HOME/Library/Frameworks/SDL3.xcframework/macos-arm64_x86_64/SDL3.framework libs/." \
+        platform="osx"
+
+    copyFiles "libs/SDL3.framework"
+    lflags "-framework" "SDL3" "-rpath" "."
 }
 
 configuration "posix" {
